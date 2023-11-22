@@ -1,4 +1,4 @@
-```typescript
+
 import mongoose from 'mongoose';
 
 const UsageTrackingSchema = new mongoose.Schema({
@@ -30,4 +30,3 @@ const UsageTrackingSchema = new mongoose.Schema({
 const UsageTrackingModel = mongoose.model('UsageTracking', UsageTrackingSchema);
 
 export default UsageTrackingModel;
-```
