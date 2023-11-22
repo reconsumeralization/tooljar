@@ -1,4 +1,4 @@
-```typescript
+
 // src/redux/reducers.ts
 
 import { ActionTypes } from './actions';
@@ -98,4 +98,4 @@ function rootReducer(state = initialState, action) {
 }
 
 export default rootReducer;
-```
+
