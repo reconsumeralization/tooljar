@@ -1,4 +1,4 @@
-```typescript
+
 import mongoose from 'mongoose';
 import AppModel from './appModel';
 
@@ -29,4 +29,3 @@ class ImportExportModel {
 }
 
 export default new ImportExportModel();
-```
