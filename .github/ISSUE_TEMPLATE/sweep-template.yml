@@ -1,5 +1,8 @@
 # Sweep Configuration File
 
+# Name for the issue template
+name: "Sweep Configuration Issue"
+
 # Rules for TypeScript best practices
 rules:
   - "All docstrings and comments should be up to date."
