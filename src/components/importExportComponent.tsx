@@ -21,34 +21,5 @@ const ImportExportComponent = () => {
         // Call the exportApp API with the selected appId
         // This is just a placeholder, replace with actual API call
         fetch(`/api/exportApp/${appId}`)
-            .then(response => response.json())
-            .then(data => setAppData(data))
-            .catch(error => console.error('Error:', error));
-    };
-
-    const handleImport = () => {
-        // Call the importApp API with the appData
-        // This is just a placeholder, replace with actual API call
-        fetch('/api/importApp', {
-            method: 'POST',
-            body: JSON.stringify(appData),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(data => dispatch(setImportExport(data)))
-            .catch(error => console.error('Error:', error));
-    };
-
-    return (
-        <div>
-            <h2>Import/Export Apps</h2>
-            <button onClick={() => handleExport(importExport.appId)}>Export App</button>
-            <button onClick={handleImport}>Import App</button>
-        </div>
-    );
-};
-
-export default ImportExportComponent;
+new line(s) to replace
 ```
