@@ -1,4 +1,4 @@
-```typescript
+
 // src/redux/actions.ts
 
 // Define action types
@@ -54,7 +54,7 @@ export function setTasks(tasks) {
 
 export function setAccessControl(accessControl) {
   return { type: ActionTypes.SET_ACCESS_CONTROL, payload: accessControl };
-}
+}```typescript
 
 export function setUsageTracking(usageTracking) {
   return { type: ActionTypes.SET_USAGE_TRACKING, payload: usageTracking };
@@ -75,4 +75,3 @@ export function setVersionControl(versionControl) {
 export function setLinkGenerator(linkGenerator) {
   return { type: ActionTypes.SET_LINK_GENERATOR, payload: linkGenerator };
 }
-```
