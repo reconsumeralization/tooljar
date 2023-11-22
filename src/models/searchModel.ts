@@ -1,4 +1,4 @@
-```typescript
+
 import mongoose from 'mongoose';
 
 const searchSchema = new mongoose.Schema({
@@ -30,4 +30,3 @@ class SearchModel {
 }
 
 export default SearchModel;
-```
