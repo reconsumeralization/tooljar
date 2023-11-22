@@ -1,42 +1,81 @@
-# Sweep AI turns bugs & feature requests into code changes (https://sweep.dev)
-# For details on our config file, check out our docs at https://docs.sweep.dev/usage/config
+# Sweep Configuration File
 
-# This setting contains a list of rules that Sweep will check for. If any of these rules are broken in a new commit, Sweep will create an pull request to fix the broken rule.
+# Rules for TypeScript best practices
 rules:
   - "All docstrings and comments should be up to date."
-['All new business logic should have corresponding unit tests.', 'Refactor large functions to be more modular.', 'Add docstrings to all functions and file headers.']
+  - "All new business logic should have corresponding unit tests."
+  - "Refactor large functions to be more modular."
+  - "Add docstrings to all functions and file headers."
+  - "Use type annotations for variables, function parameters, and return types."
+  - "Define complex data structures using interfaces or type aliases."
+  - "Embrace object-oriented programming (OOP) principles using classes, inheritance, and encapsulation."
+  - "Represent related constants with enums to ensure type safety and improve code maintainability."
+  - "Take advantage of TypeScript's async/await syntax for asynchronous operations."
+  - "Ensure proper error handling in asynchronous functions for robust error detection and handling."
+  - "Use generics to create reusable and type-safe components, functions, and classes."
+  - "Explore decorators for adding metadata or behavior to classes and class members, especially in frameworks like Angular."
+  - "Follow established TypeScript conventions in your codebase for consistency."
+  - "Use tools like TSLint or ESLint with the TypeScript plugin to enforce coding standards."
+  - "Document any deviations from conventions to maintain a transparent codebase."
+  - "We should use loguru for error logging. If the log is inside an exception, use loguru.exception to add tracebacks. Use f-strings for string formatting in logger calls."
+  - "There should be no debug log or print statements in production code."
+  - "All functions should have parameters and output annotated with type hints. Use list, tuple, and dict instead of typing.List, typing.Tuple, and typing.Dict."
+  - "Leftover TODOs in the code should be handled."
+  - "All new business logic should have corresponding unit tests in the same directory. For example, sweepai/api_test.py tests sweepai/api.py. Use unittest and unittest.mock as required."
+  - "Any clearly inefficient or repeated code should be optimized or refactored."
+  - "Remove any comments before code that are obvious. For example `# this prints hello world; print('hello world')`."
 
-# This is the branch that Sweep will develop from and make pull requests to. Most people use 'main' or 'master' but some users also use 'dev' or 'staging'.
-branch: 'main'
+# Additional settings
+settings:
+  # Specify TypeScript version for the project
+  typescript_version: '4.5.2'
 
-# By default Sweep will read the logs and outputs from your existing Github Actions. To disable this, set this to false.
-gha_enabled: True
+  # Specify the main folder for TypeScript files
+  main_ts_folder: 'src'
 
-# This is the description of your project. It will be used by sweep when creating PRs. You can tell Sweep what's unique about your project, what frameworks you use, or anything else you want.
-#
-# Example:
-#
-# description: sweepai/sweep is a python project. The main api endpoints are in sweepai/api.py. Write code that adheres to PEP8.
-description: ''
+  # Specify code generation hints
+  code_generation:
+    - 'model: Pepe'
 
-# This sets whether to create pull requests as drafts. If this is set to True, then all pull requests will be created as drafts and GitHub Actions will not be triggered.
-draft: False
+  # Specify documentation sources
+  docs_sources:
+    - 'modal'
+    - 'GitHub'
+    - 'deep-lake'
 
-# This is a list of directories that Sweep will not be able to edit.
-blocked_dirs: []
+  # Enable GitHub Actions integration
+  gha_enabled: True
 
-# This is a list of documentation links that Sweep will use to help it understand your code. You can add links to documentation for any packages you use here.
-#
-# Example:
-#
-# docs:
-#   - PyGitHub: ["https://pygithub.readthedocs.io/en/latest/", "We use pygithub to interact with the GitHub API"]
-docs: []
+  # Specify the main branch
+  branch: 'main'
 
-# Sandbox executes commands in a sandboxed environment to validate code changes after every edit to guarantee pristine code. For more details, see the [Sandbox](./sandbox) page.
-sandbox:
-  install:
-    - trunk init
-  check:
-    - trunk fmt {file_path} || return 0
-    - trunk check --fix --print-failures {file_path}
+  # Specify blocked directories
+  blocked_dirs:
+    - 'tests'
+
+  # Specify project details for description
+  description: "sweepai/sweep is a python 3.10 project. The main api endpoints are in sweepai/api.py. All imports should be global (like `import sweepai.utils.github_utils`). Write unit tests in the same directory as their corresponding code, i.e. sweepai/api_test.py tests sweepai/api.py. We use pytest for tests. Never use wildcard imports. Use list and tuple for typing instead of typing.List and typing.Tuple."
+
+  # Specify documentation for external packages
+  docs:
+    github:
+      - "https://pygithub.readthedocs.io/en/stable"
+      - "We use github to perform actions with Sweep."
+    deeplake:
+      - "https://docs.deeplake.ai/en/latest"
+      - "We use deeplake as our vector database."
+
+  # Sandbox settings for installation and checks
+  sandbox:
+    install:
+      - pre-commit install
+      - pre-commit run --file sweepai/api.py || exit 0
+      - pip install poetry
+      - poetry install
+      - poetry run pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - trunk init
+    check:
+      - trunk check --fix --filter=-ruff --print-failures {file_path}
+      - git add . && pre-commit run --files {file_path} || exit 0
+      - 'if [[ "{file_path}" == *.py ]]; then PYTHONPATH=. poetry run pylint --errors-only {file_path}; else exit 0; fi'
+      - 'if [[ "{file_path}" == *.py ]]; then PYTHONPATH=. poetry run python {file_path}; else exit 0; fi'
