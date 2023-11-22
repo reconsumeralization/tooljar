@@ -1,4 +1,4 @@
-```typescript
+
 import mongoose from 'mongoose';
 
 const AuditLogSchema = new mongoose.Schema({
@@ -28,4 +28,4 @@ const AuditLogSchema = new mongoose.Schema({
 const AuditLogsModel = mongoose.model('AuditLog', AuditLogSchema);
 
 export default AuditLogsModel;
-```
+
