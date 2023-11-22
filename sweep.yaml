@@ -1,10 +1,70 @@
 # Sweep AI turns bugs & feature requests into code changes (https://sweep.dev)
 # For details on our config file, check out our docs at https://docs.sweep.dev/usage/config
 
-# This setting contains a list of rules that Sweep will check for. If any of these rules are broken in a new commit, Sweep will create an pull request to fix the broken rule.
+# This setting contains a list of rules that Sweep will check for. If any of these rules are broken in a new commit, Sweep will create a pull request to fix the broken rule.
 rules:
-  - "All docstrings and comments should be up to date."
-['All new business logic should have corresponding unit tests.', 'Refactor large functions to be more modular.', 'Add docstrings to all functions and file headers.']
+  - name: "Regularly review and update docstrings and comments"
+    description: "Review and update docstrings and comments in your code to reflect any changes in functionality."
+
+  - name: "All new business logic should have corresponding unit tests"
+    description: "Create unit tests for every new piece of business logic to ensure its correctness."
+
+  - name: "Refactor large functions to be more modular"
+    description: "Break down large functions into smaller, more modular functions to improve code readability and maintainability."
+
+  - name: "Add docstrings to all functions and file headers"
+    description: "Ensure that every function and file has a clear and informative docstring describing its purpose and usage."
+
+  - name: "Use type annotations for variables, function parameters, and return types"
+    description: "Leverage TypeScript's static typing by adding type annotations to variables, function parameters, and return types."
+
+  - name: "Define complex data structures using interfaces or type aliases"
+    description: "Use TypeScript interfaces or type aliases to define complex data structures and promote consistency in data handling."
+
+  - name: "Embrace object-oriented programming (OOP) principles using classes, inheritance, and encapsulation"
+    description: "Design your code using object-oriented principles, creating well-designed class structures that model application entities and their behavior."
+
+  - name: "Represent related constants with enums to ensure type safety and improve code maintainability"
+    description: "Use enums for related constants to ensure type safety and improve code maintainability."
+
+  - name: "Take advantage of TypeScript's async/await syntax for asynchronous operations"
+    description: "Use async/await syntax for asynchronous operations to enhance code readability."
+
+  - name: "Ensure proper error handling in asynchronous functions for robust error detection and handling"
+    description: "Implement robust error handling mechanisms in asynchronous functions to detect and handle errors effectively."
+
+  - name: "Use generics to create reusable and type-safe components, functions, and classes"
+    description: "Apply generics where flexibility in type usage is beneficial to promote code reusability."
+
+  - name: "Explore decorators for adding metadata or behavior to classes and class members, especially in frameworks like Angular"
+    description: "Use decorators judiciously to enhance code organization and functionality, particularly in frameworks like Angular."
+
+  - name: "Follow established TypeScript conventions in your codebase for consistency"
+    description: "Adhere to established TypeScript conventions to maintain code consistency. Use tools like TSLint or ESLint with the TypeScript plugin to enforce coding standards."
+
+  - name: "Document any deviations from conventions to maintain a transparent codebase"
+    description: "Document any deviations from established conventions to maintain transparency in the codebase."
+
+  - name: "Use loguru for error logging. If the log is inside an exception, use loguru.exception to add tracebacks. Use f-strings for string formatting in logger calls"
+    description: "Implement error logging using loguru, and use loguru.exception for logging exceptions with tracebacks. Use f-strings for string formatting in logger calls."
+
+  - name: "There should be no debug log or print statements in production code"
+    description: "Remove or disable debug logs and print statements in production code to avoid unnecessary output."
+
+  - name: "All functions should have parameters and output annotated with type hints. Use list, tuple, and dict instead of typing.List, typing.Tuple, and typing.Dict"
+    description: "Ensure that all functions have parameters and output annotated with type hints. Prefer using list, tuple, and dict over typing.List, typing.Tuple, and typing.Dict."
+
+  - name: "Leftover TODOs in the code should be handled"
+    description: "Regularly review and address any TODO comments in the codebase to avoid accumulating unfinished tasks."
+
+  - name: "All new business logic should have corresponding unit tests in the same directory. For example, sweepai/api_test.py tests sweepai/api.py. Use unittest and unittest.mock as required"
+    description: "Create unit tests for new business logic and place them in the same directory. Follow the specified naming convention, such as sweepai/api_test.py testing sweepai/api.py, and use unittest and unittest.mock as needed."
+
+  - name: "Any clearly inefficient or repeated code should be optimized or refactored"
+    description: "Identify and optimize any clearly inefficient or repeated code to improve performance and maintainability."
+
+  - name: "Remove any comments before code that are obvious. For example # this prints hello world; print('hello world')"
+    description: "Remove unnecessary comments that state the obvious or duplicate information present in the code."
 
 # This is the branch that Sweep will develop from and make pull requests to. Most people use 'main' or 'master' but some users also use 'dev' or 'staging'.
 branch: 'main'
