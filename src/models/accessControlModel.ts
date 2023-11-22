@@ -1,4 +1,4 @@
-```typescript
+
 import mongoose from 'mongoose';
 
 const accessControlSchema = new mongoose.Schema({
@@ -25,4 +25,3 @@ const accessControlSchema = new mongoose.Schema({
 const AccessControl = mongoose.model('AccessControl', accessControlSchema);
 
 export default AccessControl;
-```
