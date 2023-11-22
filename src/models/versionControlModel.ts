@@ -1,4 +1,4 @@
-```typescript
+
 import mongoose from 'mongoose';
 
 const versionControlSchema = new mongoose.Schema({
@@ -28,4 +28,3 @@ const versionControlSchema = new mongoose.Schema({
 const VersionControlModel = mongoose.model('VersionControl', versionControlSchema);
 
 export default VersionControlModel;
-```
