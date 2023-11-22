@@ -1,4 +1,4 @@
-```typescript
+
 import mongoose from 'mongoose';
 
 const collaborationSchema = new mongoose.Schema({
@@ -19,4 +19,3 @@ const collaborationSchema = new mongoose.Schema({
 const Collaboration = mongoose.model('Collaboration', collaborationSchema);
 
 export default Collaboration;
-```
