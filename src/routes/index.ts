@@ -1,4 +1,3 @@
-```typescript
 import { Router } from 'express';
 import auditLogsController from '../controllers/auditLogsController';
 import workspaceController from '../controllers/workspaceController';

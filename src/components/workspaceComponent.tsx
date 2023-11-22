@@ -12,7 +12,7 @@ const WorkspaceComponent = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <divl>
       <h1>Workspaces</h1>
       {workspaces.loading ? (
         <p>Loading...</p>

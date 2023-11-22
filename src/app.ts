@@ -1,8 +1,7 @@
-```typescript
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import dotenv from 'dotenv';
+import { config } from 'dotenv';
 
 import auditLogsRoutes from './routes/auditLogsController';
 import workspaceRoutes from './routes/workspaceController';
@@ -19,7 +18,7 @@ import collaborationRoutes from './routes/collaborationController';
 import versionControlRoutes from './routes/versionControlController';
 import linkGeneratorRoutes from './routes/linkGeneratorController';
 
-dotenv.config();
+config();
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -48,4 +47,3 @@ app.listen(port, () => {
 });
 
 export default app;
-```
