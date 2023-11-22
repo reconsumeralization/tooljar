@@ -1,15 +1,28 @@
-name: Sweep Issue
-title: 'Sweep: '
-description: For small bugs, features, refactors, and tests to be handled by Sweep, an AI-powered junior developer.
-labels: sweep
-body:
-  - type: textarea
-    id: description
-    attributes:
-      label: Details
-      description: Tell Sweep where and what to edit and provide enough context for a new developer to the codebase
-      placeholder: |
-        Unit Tests: Write unit tests for <FILE>. Test each function in the file. Make sure to test edge cases.
-        Bugs: The bug might be in <FILE>. Here are the logs: ...
-        Features: the new endpoint should use the ... class from <FILE> because it contains ... logic.
-        Refactors: We are migrating this function to ... version because ...
+name: TypeScript Best Practices Issue
+about: Create an issue to address TypeScript best practices.
+
+title: "[Brief description of the issue]"
+
+description: |
+  ## Issue Description
+  [Provide a detailed description of the issue or improvement.]
+
+  ## TypeScript Best Practices Checklist
+  - [ ] All docstrings and comments are up to date.
+  - [ ] All new business logic has corresponding unit tests.
+  - [ ] Large functions are refactored to be more modular.
+  - [ ] Docstrings are added to all functions and file headers.
+  - [ ] Type annotations are used for variables, function parameters, and return types.
+  - [ ] Complex data structures are defined using interfaces or type aliases.
+  - [ ] Object-oriented programming (OOP) principles are embraced using classes, inheritance, and encapsulation.
+  - [ ] Related constants are represented with enums for type safety.
+  - [ ] TypeScript's async/await syntax is used for asynchronous operations.
+  - [ ] Proper error handling is implemented in asynchronous functions.
+  - [ ] Generics are used to create reusable and type-safe components, functions, and classes.
+  - [ ] Decorators are explored for adding metadata or behavior to classes and class members.
+
+labels:
+  - "TypeScript Best Practices"
+
+assignees:
+  - [assignee_username]
