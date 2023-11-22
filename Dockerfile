@@ -8,6 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install any needed packages specified in package.json
+RUN npm install loguru
 RUN npm install
 
 # Bundle the app source inside the Docker image
