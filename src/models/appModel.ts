@@ -1,4 +1,4 @@
-```typescript
+
 import mongoose from 'mongoose';
 
 const appSchema = new mongoose.Schema({
@@ -58,4 +58,3 @@ const appSchema = new mongoose.Schema({
 const AppModel = mongoose.model('App', appSchema);
 
 export default AppModel;
-```
