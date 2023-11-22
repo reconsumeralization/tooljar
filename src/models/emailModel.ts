@@ -54,3 +54,50 @@ class EmailModel {
 
 export default EmailModel;
 ```
+}
+
+export default EmailModel;
+```
+}
+
+export default EmailModel;
+```
+
+export default EmailModel;
+```
+export default EmailModel;
+```
+/**
+ * Finds all sent emails.
+ * @returns {Promise<EmailData[]>} The array of sent emails.
+ */
+/**
+ * Sends the email.
+ * @throws {Error} If an error occurs while sending the email.
+ */
+public async send(): Promise<void> {
+  // This is a placeholder for the actual implementation.
+  // In a real-world application, this method would interact with the database to retrieve all sent emails.
+  // However, for the purpose of this task, we will return an empty array.
+  return [];
+}
+/**
+ * Finds all sent emails.
+ * @returns {Promise<EmailData[]>} The array of sent emails.
+ */
+public static async find(): Promise<EmailData[]> {
+  // This is a placeholder for the actual implementation.
+  // In a real-world application, this method would interact with the database to retrieve all sent emails.
+  // However, for the purpose of this task, we will return an empty array.
+  return [];
+}
+/**
+ * Finds all sent emails.
+ * @returns {Promise<EmailData[]>} The array of sent emails.
+ */
+public static async find(): Promise<EmailData[]> {
+  // This is a placeholder for the actual implementation.
+  // In a real-world application, this method would interact with the database to retrieve all sent emails.
+  // However, for the purpose of this task, we will return an empty array.
+  return [];
+}
