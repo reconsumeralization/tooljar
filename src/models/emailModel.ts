@@ -1,4 +1,4 @@
-```typescript
+
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 
@@ -53,20 +53,20 @@ class EmailModel {
 }
 
 export default EmailModel;
-```
+
 }
 
 export default EmailModel;
-```
+
 }
 
 export default EmailModel;
-```
+
 
 export default EmailModel;
-```
+
 export default EmailModel;
-```
+
 /**
  * Finds all sent emails.
  * @returns {Promise<EmailData[]>} The array of sent emails.
