@@ -1,4 +1,4 @@
-```typescript
+
 import { Schema, model } from 'mongoose';
 
 // Define the Task schema
@@ -36,4 +36,3 @@ const TaskSchema = new Schema({
 
 // Export the Task model
 export default model('Task', TaskSchema);
-```
