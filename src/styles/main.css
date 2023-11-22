@@ -1,0 +1,47 @@
+/* src/styles/main.css */
+
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background-color: #1a1a1a;
+    color: #ccc;
+}
+
+.container.dark-mode {
+    background-color: #2a2a2a;
+}
+
+/* Workspace Styles */
+.workspace {
+    display: flex;
+    flex-direction: row;
+}
+
+/* App Styles */
+.app {
+    flex: 1;
+    margin: 10px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.app.dark-mode {
+    background-color: #3a3a3a;
+}
+
+/* Other styles go here */
