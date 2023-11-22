@@ -1,4 +1,4 @@
-```typescript
+
 import { Request, Response, NextFunction } from 'express';
 
 // Helper function to handle async routes
@@ -30,4 +30,3 @@ export const validateIP = (ip: string) => {
   const re = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
   return re.test(String(ip));
 };
-```
