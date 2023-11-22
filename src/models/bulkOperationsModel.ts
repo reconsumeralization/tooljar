@@ -1,4 +1,4 @@
-```typescript
+
 import mongoose from 'mongoose';
 
 const bulkOperationsSchema = new mongoose.Schema({
@@ -52,4 +52,3 @@ class BulkOperationsModel {
 }
 
 export default BulkOperationsModel;
-```
