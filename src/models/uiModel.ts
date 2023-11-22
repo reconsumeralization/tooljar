@@ -1,4 +1,4 @@
-```typescript
+
 import mongoose from 'mongoose';
 
 const uiSchema = new mongoose.Schema({
@@ -37,4 +37,3 @@ class UIModelClass {
 }
 
 export const uiModel = new UIModelClass();
-```
