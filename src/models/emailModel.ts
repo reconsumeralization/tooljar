@@ -1,6 +1,10 @@
 ```typescript
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
+import { logger } from '../utils/logger';
+
+dotenv.config();
+import dotenv from 'dotenv';
 
 dotenv.config();
 
