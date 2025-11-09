@@ -1,84 +1,103 @@
-```typescript
 import { Request, Response } from 'express';
 import AccessControl from '../models/accessControlModel';
+import { catchAsync, AppError } from '../middleware/errorHandler';
+import { isValidObjectId } from '../middleware/validation';
 
 const accessControlController = {
   // Get all access controls
-  getAllAccessControls: async (req: Request, res: Response) => {
-    try {
-      const accessControls = await AccessControl.find();
-      res.json(accessControls);
-    } catch (err) {
-      res.status(500).json({ message: err.message });
-    }
-  },
+  getAllAccessControls: catchAsync(async (req: Request, res: Response) => {
+    const accessControls = await AccessControl.find();
+    res.status(200).json({
+      status: 'success',
+      results: accessControls.length,
+      data: { accessControls }
+    });
+  }),
 
   // Get one access control
-  getAccessControl: async (req: Request, res: Response) => {
-    try {
-      const accessControl = await AccessControl.findById(req.params.id);
-      if (accessControl == null) {
-        return res.status(404).json({ message: 'Cannot find access control' });
-      }
-      res.json(accessControl);
-    } catch (err) {
-      return res.status(500).json({ message: err.message });
+  getAccessControl: catchAsync(async (req: Request, res: Response) => {
+    // Validate ObjectId to prevent NoSQL injection
+    if (!isValidObjectId(req.params.id)) {
+      throw new AppError('Invalid access control ID format', 400);
     }
-  },
+
+    const accessControl = await AccessControl.findById(req.params.id);
+
+    if (!accessControl) {
+      throw new AppError('Access control not found', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: { accessControl }
+    });
+  }),
 
   // Create one access control
-  createAccessControl: async (req: Request, res: Response) => {
+  createAccessControl: catchAsync(async (req: Request, res: Response) => {
+    const { name, permissions } = req.body;
+
+    if (!name) {
+      throw new AppError('Name is required', 400);
+    }
+
     const accessControl = new AccessControl({
-      name: req.body.name,
-      permissions: req.body.permissions,
+      name,
+      permissions,
     });
 
-    try {
-      const newAccessControl = await accessControl.save();
-      res.status(201).json(newAccessControl);
-    } catch (err) {
-      res.status(400).json({ message: err.message });
-    }
-  },
+    const newAccessControl = await accessControl.save();
+
+    res.status(201).json({
+      status: 'success',
+      data: { accessControl: newAccessControl }
+    });
+  }),
 
   // Update one access control
-  updateAccessControl: async (req: Request, res: Response) => {
-    try {
-      const accessControl = await AccessControl.findById(req.params.id);
-      if (accessControl == null) {
-        return res.status(404).json({ message: 'Cannot find access control' });
-      }
-
-      if (req.body.name != null) {
-        accessControl.name = req.body.name;
-      }
-
-      if (req.body.permissions != null) {
-        accessControl.permissions = req.body.permissions;
-      }
-
-      const updatedAccessControl = await accessControl.save();
-      res.json(updatedAccessControl);
-    } catch (err) {
-      res.status(400).json({ message: err.message });
+  updateAccessControl: catchAsync(async (req: Request, res: Response) => {
+    // Validate ObjectId to prevent NoSQL injection
+    if (!isValidObjectId(req.params.id)) {
+      throw new AppError('Invalid access control ID format', 400);
     }
-  },
+
+    const accessControl = await AccessControl.findByIdAndUpdate(
+      req.params.id,
+      {
+        name: req.body.name,
+        permissions: req.body.permissions
+      },
+      { new: true, runValidators: true }
+    );
+
+    if (!accessControl) {
+      throw new AppError('Access control not found', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: { accessControl }
+    });
+  }),
 
   // Delete one access control
-  deleteAccessControl: async (req: Request, res: Response) => {
-    try {
-      const accessControl = await AccessControl.findById(req.params.id);
-      if (accessControl == null) {
-        return res.status(404).json({ message: 'Cannot find access control' });
-      }
-
-      await accessControl.remove();
-      res.json({ message: 'Deleted Access Control' });
-    } catch (err) {
-      res.status(500).json({ message: err.message });
+  deleteAccessControl: catchAsync(async (req: Request, res: Response) => {
+    // Validate ObjectId to prevent NoSQL injection
+    if (!isValidObjectId(req.params.id)) {
+      throw new AppError('Invalid access control ID format', 400);
     }
-  },
+
+    const accessControl = await AccessControl.findByIdAndDelete(req.params.id);
+
+    if (!accessControl) {
+      throw new AppError('Access control not found', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Access control deleted successfully'
+    });
+  }),
 };
 
 export default accessControlController;
-```
