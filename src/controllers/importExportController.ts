@@ -1,30 +1,52 @@
-```typescript
 import { Request, Response } from 'express';
 import ImportExportModel from '../models/importExportModel';
+import { catchAsync, AppError } from '../middleware/errorHandler';
+import { isValidObjectId, isSecurePath } from '../middleware/validation';
 
 class ImportExportController {
     // Export app as JSON
-    public async exportApp(req: Request, res: Response): Promise<void> {
-        try {
-            const appId = req.params.id;
-            const app = await ImportExportModel.exportApp(appId);
-            res.json(app);
-        } catch (error) {
-            res.status(500).send({ message: error.message });
+    public exportApp = catchAsync(async (req: Request, res: Response): Promise<void> => {
+        const appId = req.params.id;
+
+        // Validate ObjectId to prevent NoSQL injection
+        if (!isValidObjectId(appId)) {
+            throw new AppError('Invalid app ID format', 400);
         }
-    }
+
+        const app = await ImportExportModel.exportApp(appId);
+
+        res.status(200).json({
+            status: 'success',
+            data: { app }
+        });
+    });
 
     // Import app from JSON
-    public async importApp(req: Request, res: Response): Promise<void> {
-        try {
-            const appData = req.body;
-            const app = await ImportExportModel.importApp(appData);
-            res.json(app);
-        } catch (error) {
-            res.status(500).send({ message: error.message });
+    public importApp = catchAsync(async (req: Request, res: Response): Promise<void> => {
+        const appData = req.body;
+
+        // Validate required fields
+        if (!appData || typeof appData !== 'object') {
+            throw new AppError('Invalid app data', 400);
         }
-    }
+
+        // If appData contains file paths, validate them
+        if (appData.filePath && !isSecurePath(appData.filePath)) {
+            throw new AppError('Invalid file path detected', 400);
+        }
+
+        // Prevent importing with specific ID to avoid overwriting
+        if (appData._id) {
+            throw new AppError('Cannot import with specific ID', 400);
+        }
+
+        const app = await ImportExportModel.importApp(appData);
+
+        res.status(201).json({
+            status: 'success',
+            data: { app }
+        });
+    });
 }
 
 export default new ImportExportController();
-```

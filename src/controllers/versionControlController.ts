@@ -1,71 +1,107 @@
-```typescript
 import { Request, Response } from 'express';
 import VersionControlModel from '../models/versionControlModel';
+import { catchAsync, AppError } from '../middleware/errorHandler';
+import { isValidObjectId } from '../middleware/validation';
 
 class VersionControlController {
   // Get all versions
-  public async getAllVersions(req: Request, res: Response): Promise<void> {
-    try {
-      const versions = await VersionControlModel.find();
-      res.status(200).json({ versions });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  }
+  public getAllVersions = catchAsync(async (req: Request, res: Response): Promise<void> => {
+    const versions = await VersionControlModel.find();
+    res.status(200).json({
+      status: 'success',
+      results: versions.length,
+      data: { versions }
+    });
+  });
 
   // Get a specific version
-  public async getVersion(req: Request, res: Response): Promise<void> {
-    try {
-      const version = await VersionControlModel.findById(req.params.id);
-      if (!version) {
-        res.status(404).json({ message: 'Version not found' });
-      } else {
-        res.status(200).json({ version });
-      }
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+  public getVersion = catchAsync(async (req: Request, res: Response): Promise<void> => {
+    // Validate ObjectId to prevent NoSQL injection
+    if (!isValidObjectId(req.params.id)) {
+      throw new AppError('Invalid version ID format', 400);
     }
-  }
+
+    const version = await VersionControlModel.findById(req.params.id);
+
+    if (!version) {
+      throw new AppError('Version not found', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: { version }
+    });
+  });
 
   // Create a new version
-  public async createVersion(req: Request, res: Response): Promise<void> {
-    try {
-      const version = new VersionControlModel(req.body);
-      await version.save();
-      res.status(201).json({ version });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+  public createVersion = catchAsync(async (req: Request, res: Response): Promise<void> => {
+    // Validate required fields
+    const { version, changes, author, app } = req.body;
+
+    if (!version || !changes || !author || !app) {
+      throw new AppError('Missing required fields: version, changes, author, app', 400);
     }
-  }
+
+    // Validate app ObjectId
+    if (!isValidObjectId(app)) {
+      throw new AppError('Invalid app ID format', 400);
+    }
+
+    const newVersion = new VersionControlModel(req.body);
+    await newVersion.save();
+
+    res.status(201).json({
+      status: 'success',
+      data: { version: newVersion }
+    });
+  });
 
   // Update a version
-  public async updateVersion(req: Request, res: Response): Promise<void> {
-    try {
-      const version = await VersionControlModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
-      if (!version) {
-        res.status(404).json({ message: 'Version not found' });
-      } else {
-        res.status(200).json({ version });
-      }
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+  public updateVersion = catchAsync(async (req: Request, res: Response): Promise<void> => {
+    // Validate ObjectId to prevent NoSQL injection
+    if (!isValidObjectId(req.params.id)) {
+      throw new AppError('Invalid version ID format', 400);
     }
-  }
+
+    // Validate app ObjectId if provided
+    if (req.body.app && !isValidObjectId(req.body.app)) {
+      throw new AppError('Invalid app ID format', 400);
+    }
+
+    const version = await VersionControlModel.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+
+    if (!version) {
+      throw new AppError('Version not found', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: { version }
+    });
+  });
 
   // Delete a version
-  public async deleteVersion(req: Request, res: Response): Promise<void> {
-    try {
-      const version = await VersionControlModel.findByIdAndDelete(req.params.id);
-      if (!version) {
-        res.status(404).json({ message: 'Version not found' });
-      } else {
-        res.status(200).json({ message: 'Version deleted' });
-      }
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+  public deleteVersion = catchAsync(async (req: Request, res: Response): Promise<void> => {
+    // Validate ObjectId to prevent NoSQL injection
+    if (!isValidObjectId(req.params.id)) {
+      throw new AppError('Invalid version ID format', 400);
     }
-  }
+
+    const version = await VersionControlModel.findByIdAndDelete(req.params.id);
+
+    if (!version) {
+      throw new AppError('Version not found', 404);
+    }
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Version deleted successfully'
+    });
+  });
 }
 
 export default new VersionControlController();
-```
